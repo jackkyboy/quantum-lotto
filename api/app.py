@@ -43,6 +43,7 @@ def root():
 # ===== Load data once on startup =====
 df_expanded = load_json_data()
 # ===== Particle Prediction =====
+# ===== Particle Prediction =====
 @app.post("/predict-particle")
 def predict_particle(draw_date: str = Body(..., embed=True)):
     """
@@ -53,34 +54,44 @@ def predict_particle(draw_date: str = Body(..., embed=True)):
         if not draw_date or len(draw_date) < 8:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid draw_date")
 
-        # 🔐 ล็อก seed ให้ deterministic
+        # deterministic seed
         seed = generate_seed_from_date(draw_date)
         lock_seed(seed)
 
-        # 👇 ไม่ส่ง seed เข้าไป (ฟังก์ชันไม่รองรับ keyword นี้)
-        result_df = run_particle_prediction(df_expanded)
+        result = run_particle_prediction(df_expanded)
 
-        # map ชื่อคอลัมน์ ถ้ามี Ψ(n)
-        if "Ψ(n)" in result_df.columns:
-            result_df = result_df.rename(columns={"Ψ(n)": "psi"})
+        # รองรับทั้ง tuple และ DataFrame
+        result_df = result[0] if isinstance(result, tuple) else result
 
-        # สร้างผลลัพธ์ top 5 / top 10
+        # normalize ชื่อคอลัมน์ที่มักต่างกัน
+        colmap = {"Ψ(n)": "psi", "psi(n)": "psi", "amplitude": "psi", "score": "psi"}
+        for k, v in colmap.items():
+            if hasattr(result_df, "columns") and k in result_df.columns:
+                result_df = result_df.rename(columns={k: v})
+
+        if "number" not in result_df.columns:
+            for cand in ["n", "digit", "num"]:
+                if cand in result_df.columns:
+                    result_df = result_df.rename(columns={cand: "number"})
+                    break
+
+        # ตรวจคอลัมน์จำเป็น
+        missing = [c for c in ["number", "psi"] if c not in result_df.columns]
+        if missing:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                detail=f"Missing columns in prediction: {missing}")
+
         top_5 = result_df.head(5)[["number", "psi"]].to_dict(orient="records")
         top_10 = result_df.head(10)[["number", "psi"]].to_dict(orient="records")
 
-        return {
-            "draw_date": draw_date,
-            "seed_used": seed,
-            "prediction": top_5,
-            "top10": top_10
-        }
+        return {"draw_date": draw_date, "seed_used": seed, "prediction": top_5, "top10": top_10}
+
     except HTTPException:
         raise
     except Exception as e:
-        return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            content={"error": "predict-particle failed", "detail": str(e)}
-        )
+        return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            content={"error": "predict-particle failed", "detail": str(e)})
+
 
 
 # ===== Schrödinger Simulation =====
