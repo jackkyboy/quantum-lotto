@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use("Agg")
 from config import OUTPUT_DIR
 import os
 # /Users/apichet/quantum_lotto/src/visualizer/particle_plot.py

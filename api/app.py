@@ -58,7 +58,7 @@ def predict_particle(draw_date: str = Body(..., embed=True)):
         seed = generate_seed_from_date(draw_date)
         lock_seed(seed)
 
-        result = run_particle_prediction(df_expanded)
+        result = run_particle_prediction(df_expanded, save_image=False)
 
         # รองรับทั้ง tuple และ DataFrame
         result_df = result[0] if isinstance(result, tuple) else result
@@ -150,7 +150,7 @@ def run_ml():
 @app.post("/particle-plot")
 def particle_plot():
     try:
-        result_df = run_particle_prediction(df_expanded)
+        result_df = run_particle_prediction(df_expanded, save_image=False)
         filename = "particle_field_heatmap.png"
         image_path = plot_particle_field_heatmap(result_df, filename=filename)
         return FileResponse(path=image_path, media_type="image/png", filename=filename)
