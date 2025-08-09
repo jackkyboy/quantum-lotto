@@ -1,3 +1,5 @@
+from config import OUTPUT_DIR
+import os
 # /Users/apichet/quantum_lotto/src/visualizer/particle_plot.py
 import pandas as pd
 import numpy as np
@@ -20,7 +22,7 @@ def plot_particle_field_heatmap(result_df, filename="particle_field_heatmap.png"
     plt.xlabel("2-digit number")
     plt.tight_layout()
 
-    output_dir = os.path.join(os.path.dirname(__file__), "..", "outputs")
+    output_dir = OUTPUT_DIR
     os.makedirs(output_dir, exist_ok=True)
     full_path = os.path.abspath(os.path.join(output_dir, filename))
 
@@ -97,7 +99,7 @@ def track_psi_over_time(
         plt.grid(True, linestyle="--", alpha=0.3)
         plt.tight_layout()
 
-        output_dir = os.path.join(os.path.dirname(__file__), "..", "outputs")
+        output_dir = OUTPUT_DIR
         os.makedirs(output_dir, exist_ok=True)
         path = os.path.join(output_dir, filename)
         plt.savefig(path)
@@ -166,7 +168,7 @@ def track_actual_psi_over_time(
         plt.grid(True, linestyle="--", alpha=0.4)
         plt.tight_layout()
 
-        output_dir = os.path.join(os.path.dirname(__file__), "..", "outputs")
+        output_dir = OUTPUT_DIR
         os.makedirs(output_dir, exist_ok=True)
         path = os.path.join(output_dir, filename)
         plt.savefig(path)

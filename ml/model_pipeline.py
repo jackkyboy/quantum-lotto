@@ -1,3 +1,5 @@
+from config import OUTPUT_DIR
+import os
 # src/ml/model_pipeline.py
 
 # src/ml/model_pipeline.py
@@ -177,7 +179,7 @@ def run_ml_pipeline(df):
     plt.tight_layout()
 
     # ✅ Save instead of showing
-    output_dir = os.path.join(os.path.dirname(__file__), "..", "outputs")
+    output_dir = OUTPUT_DIR
     os.makedirs(output_dir, exist_ok=True)
     plot_path = os.path.join(output_dir, "confusion_matrix_rf.png")
     plt.savefig(plot_path)

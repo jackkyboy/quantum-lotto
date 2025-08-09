@@ -1,3 +1,5 @@
+from config import OUTPUT_DIR
+import os
 from config import get_seed
 # run/run_particle.py
 
@@ -53,7 +55,7 @@ def run_particle_prediction(df, save_image=True, return_plot_path=False):
     print(most_common_entangled_pairs(past_2digit_results, top_k=5))
 
     # ➕ Save CSV
-    output_csv = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs", "particle_field_output.csv"))
+    output_csv = os.path.abspath(OUTPUT_DIR)
     result_df.to_csv(output_csv, index=False)
     print(f"\n📦 บันทึกผลที่: {output_csv}")
 

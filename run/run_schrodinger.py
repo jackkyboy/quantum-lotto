@@ -1,3 +1,5 @@
+from config import OUTPUT_DIR
+import os
 from config import get_seed
 # run/run_schrodinger.py
 # run/run_schrodinger.py
@@ -26,7 +28,7 @@ def run_schrodinger_simulation(df):
         print(f"🔮 {num} → {count} ครั้ง")
 
     # ✅ สร้างโฟลเดอร์ outputs หากยังไม่มี
-    output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "outputs"))
+    output_dir = os.path.abspath(OUTPUT_DIR)
     os.makedirs(output_dir, exist_ok=True)
 
     # ✅ Save CSV ลง outputs
