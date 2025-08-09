@@ -5,3 +5,4 @@ pandas
 sqlalchemy
 pydantic
 python-dotenv
+matplotlib
