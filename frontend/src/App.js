@@ -11,9 +11,7 @@ import MLReportCard from './components/MLReportCard';
 import ParticleTable from './components/ParticleTable';
 import DonateBanner from './components/DonateBanner';
 import Footer from './components/Footer';
-// ใน App.jsx
 import HowToModal from './components/HowToModal';
-
 
 function App() {
   const [predictions, setPredictions] = useState([]);
@@ -28,15 +26,14 @@ function App() {
   const [loadingHeatmap, setLoadingHeatmap] = useState(false);
   const [howToOpen, setHowToOpen] = useState(false);
 
-
-  // meta จาก /predict-particle
   const [predictionMeta, setPredictionMeta] = useState({
     actual: null,
     hit5: false,
     hit10: false,
   });
 
-  const API_BASE = "http://localhost:8000";
+  // ✅ ใช้ API_BASE จาก .env.production หรือ fallback เป็น localhost
+  const API_BASE = process.env.REACT_APP_API_BASE_URL || "http://localhost:8000";
 
   useEffect(() => {
     localStorage.setItem('drawDate', drawDate || '');
@@ -47,7 +44,6 @@ function App() {
       alert("⚠️ กรุณาเลือกวันที่งวดก่อนรันทำนาย");
       return;
     }
-    // ตรวจรูปแบบ YYYY-MM-DD แบบง่าย ๆ กัน 422
     if (!/^\d{4}-\d{2}-\d{2}$/.test(drawDate)) {
       alert("รูปแบบวันที่ไม่ถูกต้อง (ต้องเป็น YYYY-MM-DD)");
       return;
@@ -56,7 +52,7 @@ function App() {
     try {
       setLoadingPredict(true);
       const res = await axios.post(`${API_BASE}/predict-particle`, { draw_date: drawDate });
-      // ตรวจว่าได้ object จริงไหม
+
       if (!res || !res.data) throw new Error("Empty response");
 
       setPredictions(res.data.prediction || []);
@@ -67,7 +63,6 @@ function App() {
         hit10: !!res.data.hit10,
       });
     } catch (err) {
-      // โชว์รายละเอียดจาก FastAPI ถ้ามี
       const msg =
         err?.response?.data?.detail ||
         err?.response?.data?.message ||
@@ -79,7 +74,6 @@ function App() {
       setLoadingPredict(false);
     }
   };
-
 
   const fetchSimulation = async () => {
     try {
