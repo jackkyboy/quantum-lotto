@@ -1,0 +1,150 @@
+/* =========================
+   Quantum Lotto — Neon Mystic
+   ========================= */
+
+/* Theme tokens */
+:root{
+  --ql-bg-dark: #0b1424;
+  --ql-bg-mid:  #0e2230;
+  --ql-bg-deep: #122e3c;
+  --ql-cyan:    #00e6e6;
+  --ql-magenta: #b37cff;
+  --ql-glow:    rgba(0,255,255,.35);
+}
+
+/* Container width & base */
+.App {
+  max-width: 980px;
+}
+
+/* ========== Hero / header ========== */
+.hero {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 28px 18px;
+  color: #fff;
+  background: radial-gradient(80% 120% at 50% 0%, var(--ql-bg-dark) 0%, var(--ql-bg-mid) 45%, var(--ql-bg-deep) 100%);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 36px rgba(0,0,0,.25), 0 0 30px var(--ql-glow);
+}
+
+/* subtle moving aurora */
+.hero::before{
+  content:"";
+  position:absolute; inset:-20%;
+  background:
+    radial-gradient(45% 30% at 20% 20%, rgba(0,255,255,.12), transparent 60%),
+    radial-gradient(35% 25% at 80% 30%, rgba(179,124,255,.12), transparent 60%),
+    radial-gradient(30% 35% at 50% 80%, rgba(255,255,255,.06), transparent 60%);
+  filter: blur(8px);
+  animation: ql-aurora 24s linear infinite;
+}
+
+@keyframes ql-aurora{
+  0%   { transform: translate3d(0,0,0) rotate(0deg); }
+  50%  { transform: translate3d(2%, -1%, 0) rotate(10deg); }
+  100% { transform: translate3d(0,0,0) rotate(0deg); }
+}
+
+.hero h1 {
+  font-weight: 800;
+  letter-spacing: .5px;
+  margin: 0;
+  text-shadow:
+    0 0 10px rgba(0,255,255,.35),
+    0 0 22px rgba(0,255,255,.25);
+}
+
+.hero-sub {
+  opacity: 0.92;
+  margin-top: 6px;
+  font-weight: 300;
+  letter-spacing: .2px;
+}
+.hero-sub .q-cyan   { color: var(--ql-cyan); }
+.hero-sub .q-magenta{ color: var(--ql-magenta); }
+
+/* ========== Section card ========== */
+.section-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.section-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(0,0,0,.1);
+  box-shadow: 0 10px 24px rgba(0,0,0,.06);
+}
+
+/* Section header */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+
+/* Controls row */
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.controls .form-control {
+  min-width: 220px;
+}
+
+/* Button subtle glow (works with Bootstrap buttons) */
+.btn-primary{
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: box-shadow .15s ease, transform .08s ease;
+}
+.btn-primary:hover{
+  box-shadow: 0 0 18px rgba(0, 123, 255, .25);
+}
+.btn:active{
+  transform: translateY(1px);
+}
+
+/* Loading spinner spacing */
+.inline-spinner { margin-left: .5rem; }
+
+/* Particle table tweaks */
+.table-sm th, .table-sm td {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.badge-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Heatmap image box */
+.heatmap-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px;
+  background: #fafafa;
+  text-align: center;
+}
+.heatmap-box img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Donate banner spacing fix */
+.banner { margin: 6px 0 18px 0; }
+
+/* Mobile spacing */
+@media (max-width: 576px) {
+  .hero { padding: 20px 14px; }
+  .hero h1 { font-size: 1.9rem; }
+  .section-card { padding: 14px; }
+}

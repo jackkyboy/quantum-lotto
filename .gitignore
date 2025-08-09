@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Outputs
+outputs/*
+!outputs/.gitkeep
+
+# Mac
+.DS_Store
+**/.git
+**/.git
