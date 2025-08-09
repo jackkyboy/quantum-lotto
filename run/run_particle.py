@@ -1,3 +1,4 @@
+from config import get_seed
 # run/run_particle.py
 
 # run/run_particle.py

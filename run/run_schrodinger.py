@@ -1,3 +1,4 @@
+from config import get_seed
 # run/run_schrodinger.py
 # run/run_schrodinger.py
 

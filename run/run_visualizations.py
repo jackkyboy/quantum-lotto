@@ -1,3 +1,4 @@
+from config import get_seed
 # /Users/apichet/quantum_lotto/src/run/run_visualizations.py
 
 # ============================================
