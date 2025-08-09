@@ -6,3 +6,9 @@ sqlalchemy
 pydantic
 python-dotenv
 matplotlib
+seaborn
+numpy
+scikit-learn
+xgboost
+optuna
+joblib
