@@ -29,7 +29,7 @@ def run_particle_prediction(df, save_image=True, return_plot_path=False):
     result_df, picks = predict_2digit_particle_field(
         past_2digits=past_2digit_results,
         k=5,
-        seed=GLOBAL_SEED
+        seed=get_seed()
     )
 
     latest_draw = df[df["date"].notna()].sort_values("date", ascending=False).iloc[0]

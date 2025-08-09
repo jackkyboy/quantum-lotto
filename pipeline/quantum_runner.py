@@ -3,10 +3,11 @@ from run.run_schrodinger import run_schrodinger_simulation, run_unitary_collapse
 from run.run_visualizations import run_quantum_field_visualizations
 from ml.features import add_date_features, add_digit_features
 from ml.model_pipeline import run_ml_pipeline
-from config import lock_seed, GLOBAL_SEED
+from config import get_seed
+
 
 def run_all_simulations(df):
-    lock_seed(GLOBAL_SEED)
+    lock_seed(get_seed())
 
     # Run Particle Prediction
     run_particle_prediction(df)

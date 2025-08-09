@@ -17,7 +17,7 @@ from collections import Counter
 def run_schrodinger_simulation(df):
     import os  # 👈 เพิ่ม import ที่นี่
 
-    sim_results_10k = generate_schrodinger_superposition(k=10000, seed=GLOBAL_SEED)
+    sim_results_10k = generate_schrodinger_superposition(k=10000, seed=get_seed())
     sim_counter_10k = Counter(sim_results_10k)
 
     print("\n🎲 Simulation: Top 10 from 10,000 Schrödinger Rounds:")

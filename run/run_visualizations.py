@@ -39,7 +39,7 @@ def run_quantum_field_visualizations():
     visualize_quantum_field_and_superposition(df_qfield)
 
     # 🧠 2. Collapse Simulation → คัดเลือกเลขเด่น
-    collapsed = collapse_from_quantum_field(df_qfield, n=5, seed=GLOBAL_SEED)
+    collapsed = collapse_from_quantum_field(df_qfield, n=5, seed=get_seed())
 
     # 🧬 3. Heatmap การพัวพันของตัวเลข (Digit Entanglement)
     visualize_digit_entanglement(df_qfield)
